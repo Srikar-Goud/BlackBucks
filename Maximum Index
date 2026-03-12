@@ -1,0 +1,45 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();   // size of array
+        int[] a = new int[n];
+
+        // reading array elements
+        for(int i = 0; i < n; i++){
+            a[i] = sc.nextInt();
+        }
+
+        int[] LMin = new int[n];
+        int[] RMax = new int[n];
+
+        // Build LMin array
+        LMin[0] = a[0];
+        for(int i = 1; i < n; i++){
+            LMin[i] = Math.min(a[i], LMin[i-1]);
+        }
+
+        // Build RMax array
+        RMax[n-1] = a[n-1];
+        for(int j = n-2; j >= 0; j--){
+            RMax[j] = Math.max(a[j], RMax[j+1]);
+        }
+
+        int i = 0, j = 0, maxDiff = -1;
+
+        // Two pointer traversal
+        while(i < n && j < n){
+            if(LMin[i] < RMax[j]){
+                maxDiff = Math.max(maxDiff, j - i);
+                j++;
+            } else {
+                i++;
+            }
+        }
+
+        System.out.println(maxDiff);
+    }
+}
